@@ -83,7 +83,7 @@ BuildRequires:  cryptsetup
 # Run time requires for flashing the bootimg
 Requires:       droid-config-flashing
 
-Provides:   kernel = %{version}
+Provides:   kernel = %{kernelversion}
 Provides:   droid-hal-img-boot
 Provides:   droid-hal-kernel-modules
 
