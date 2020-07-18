@@ -73,6 +73,7 @@ BuildRequires:  e2fsprogs
 BuildRequires:  yamui
 BuildRequires:  openssh-clients
 BuildRequires:  openssh-server
+BuildRequires:  fsarchiver
 
 # mkbootimg needs python
 BuildRequires:  python
