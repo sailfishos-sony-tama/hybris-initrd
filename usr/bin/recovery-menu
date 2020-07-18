@@ -231,7 +231,8 @@ print_usage()
 	echo "3) Shell"
 	echo "4) Perform file system check"
 	echo "5) Run sshd"
-	echo "6) Exit"
+	echo "6) Shell without mounting anything"
+        echo "7) Exit"
 	echo "Type the number of the desired action and press [Enter]: "
 }
 
@@ -322,8 +323,18 @@ while true; do
 			fi
 			;;
 		6)
-			break
-			;;
+			echo
+                        echo -n "If you continue, this may void your warranty. Are you really SURE? "
+                        if prompty "[y/N]"; then
+                                lock_shared
+                                run_action shell || cleanup_and_exit
+                                unlock
+                                sync
+                        fi
+                        ;;
+		7)
+		        break
+		        ;;
 		*)
 			echo "The option number chosen is invalid."
 			sleep 2
