@@ -79,7 +79,16 @@ BuildRequires:  fsarchiver
 BuildRequires:  python
 
 # tools
+Buildrequires:  coreutils
 BuildRequires:  cryptsetup
+BuildRequires:  sed
+
+%if 0%{?_obs_build_project:1}
+%ifarch %{ix86}
+# /boot
+BuildRequires: sudo-for-abuild
+%endif
+%endif
 
 # Run time requires for flashing the bootimg
 Requires:       droid-config-flashing
@@ -175,13 +184,18 @@ sed --in-place 's|@BATTERY_CAPACITY_FILE@|%{battery_capacity_file}|' %{_local_in
 sed --in-place 's|@BATTERY_CAPACITY_THRESHOLD@|%{battery_capacity_threshold}|' %{_local_initrd_dir}/etc/sysconfig/recovery
 
 # Create a hybris-boot.img image from the zImage
+%if 0%{?_obs_build_project:1}
+%ifarch %{ix86}
+sudo chmod 755 /boot
+%endif
+%endif
 pushd %{_local_initrd_dir}
-./mksfosinitrd.sh
+./mksfosinitrd.sh %{_lib}
 popd
 %{mkbootimg_cmd} hybris-boot.img
 
 pushd %{_local_initrd_dir}
-./mksfosinitrd.sh recovery
+./mksfosinitrd.sh %{_lib} recovery
 popd
 %{mkbootimg_cmd} hybris-recovery.img
 
