@@ -36,6 +36,7 @@ RECOVERY_FILES="				\
 	/etc/nsswitch.conf			\
 	/$1/libnss_compat.so.2			\
 	/$1/libnss_files.so.2			\
+        /sbin/tune2fs                           \
 	/usr/bin/scp				\
 	/usr/libexec/openssh/sftp-server	\
 	/usr/sbin/sshd				\
