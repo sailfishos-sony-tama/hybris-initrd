@@ -54,7 +54,11 @@
 
 Name:       droid-hal-%{device}-img-boot
 Summary:    Kernel boot image for %{device}
+%if 0%{?_obs_build_project:1}
+Version:    0.0.1
+%else
 Version:    %{localver}
+%endif
 Release:    1
 Group:      Kernel/Linux Kernel
 License:    GPLv2
@@ -155,6 +159,12 @@ fi
 %if 0%{!?external_media_devices:1}
 %define external_media_devices /dev/mmcblk[1-9]*p[1-9]*
 %endif
+
+%if 0%{!?lvm_root_size:1}
+%define lvm_root_size 2500
+%endif
+
+sed --in-place 's|@LVM_ROOT_PART_SIZE@|%{lvm_root_size}|' %{_local_initrd_dir}/etc/sysconfig/init
 
 sed --in-place 's|@PHYSDEV_PART_LABEL@|%{root_part_label}|' %{_local_initrd_dir}/etc/sysconfig/partitions
 sed --in-place 's|@FIMAGE_PART_LABEL@|%{factory_part_label}|' %{_local_initrd_dir}/etc/sysconfig/partitions
